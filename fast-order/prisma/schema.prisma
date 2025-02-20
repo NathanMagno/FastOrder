@@ -17,7 +17,7 @@ model Restaurant {
   id             String         @id @default(uuid())
   name           String
   slug           String
-  descrition     String
+  description     String
   avatarImageUrl String
   coverImageUrl  String
   cretedAt       DateTime       @default(now())
@@ -31,8 +31,10 @@ model MenuCategory {
   id           String     @id @default(uuid())
   name         String
   restaurantID String
-  restaurant   Restaurant @relation(fields: [restaurantID], references: [id])
+  restaurant   Restaurant @relation(fields: [restaurantID], references: [id], onDelete: Cascade)
   products     Product[]
+  cretedAt       DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
 }
 
 model Product {
@@ -47,7 +49,7 @@ model Product {
   menuCategoryID String
   menuCategory   MenuCategory   @relation(fields: [menuCategoryID], references: [id])
   restaurantID   String
-  restaurant     Restaurant     @relation(fields: [restaurantID], references: [id])
+  restaurant     Restaurant     @relation(fields: [restaurantID], references: [id], onDelete: Cascade)
   orderProducts  OrderProduct[]
 }
 
@@ -58,7 +60,7 @@ model Order {
   consumptionMethod ConsumptionMethod
   orderProducts     OrderProduct[]
   restaurantID      String
-  restaurant        Restaurant        @relation(fields: [restaurantID], references: [id])
+  restaurant        Restaurant        @relation(fields: [restaurantID], references: [id], onDelete: Cascade)
 }
 
 model OrderProduct {
